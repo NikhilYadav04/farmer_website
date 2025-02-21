@@ -1,0 +1,31 @@
+.content {
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.content.show {
+  height: auto;
+  max-height: 9999px;
+  transition: all 0.5s cubic-bezier(1, 0, 1, 0);
+}
+
+.form:hover {
+  box-shadow: 0 2px 2px 0 rgba(0, 255, 98, 0.2),
+    0 2px 8px 0 rgba(0, 255, 55, 0.19);
+}
+
+@keyframes moveup {
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faq-box {
+  transform: translateY(30px);
+  animation: moveup 1.5s linear forwards;
+}
+
+.faq-input {
+  transform: translateY(30px);
+  animation: moveup 1.5s linear 0.5s forwards;
+}

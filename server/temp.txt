@@ -1,0 +1,47 @@
+// const token = jwt.sign({ id: isUser._id }, "passwordKey");
+// return res.status(200).json({
+//   token,
+//   ...isUser._doc,
+// });
+// authRouter.post("/tokenIsValid", async (req, res) => {
+//   try {
+//     const token = req.header("token_key");
+//     if (!token) {
+//       return res.status(401).json({
+//         msg: "No Token Detected, Access Denied",
+//       });
+//     }
+//     const verified = await jwt.verify(token, "passwordKey");
+
+//     if (!verified) {
+//       return res.status(401).json({
+//         msg: "Invalid Token, Acess Denied",
+//       });
+//     }
+//     const user = await User.findById(verified.id);
+//     if (!user) {
+//       return res.status(401).json({
+//         msg: "No User Found",
+//       });
+//     }
+//     return res.status(200).json({
+//       ...user._doc,
+//       token,
+//     });
+//   } catch (e) {
+//     return res.status(500).json({
+//       error: e.message,
+//     });
+//   }
+// });
+
+// // get the data
+// //auth is used to check token and validate user
+// // if auth works then only it will proceed to next (req,res)
+// authRouter.get("/", auth, async (req, res) => {
+//   const user = await User.findById(req.user);
+//   return res.status(200).json({
+//     ...user._doc,
+//     token: req.token,
+//   });
+// });
