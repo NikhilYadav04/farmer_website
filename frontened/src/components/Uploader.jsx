@@ -81,7 +81,7 @@ const Uploader = () => {
     <>
       <div className="mx-5 flex flex-row flex-wrap items-center justify-center gap-3 rounded-3xl border border-transparent p-5 hover:border-green-500 lg:justify-between">
         <h1 className="w-1/2 text-center text-5xl font-bold">
-          Upload Crop images and get{' '}
+          Upload crop images and get{' '}
           <span className="bg-gradient-to-r from-green-900 to-green-600 bg-clip-text text-transparent">
             disease prediction
           </span>
@@ -126,8 +126,8 @@ const Uploader = () => {
               />
             </span>
           </section>
-          <Dropdown />
-          <div className="mx-auto">
+          <div className="mx-auto flex w-full items-start justify-center gap-2">
+            <Dropdown />
             <Button
               type="primary"
               onClick={handleSubmit}
