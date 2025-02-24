@@ -22,11 +22,11 @@ export const uploadImageAPI = async (selectedFile) => {
   return response.data;
 };
 
-export const findDiseaseAPI = async (selectedFile) => {
-  if (!selectedFile) throw new Error('No file selected');
+export const findDiseaseAPI = async (selectedOption) => {
+  if (!selectedOption) throw new Error('No file selected');
 
   const formData = new FormData();
-  formData.append('file', selectedFile);
+  formData.append('file', selectedOption);
   const item = JSON.parse(localStorage.getItem('itemdata'))?.item;
 
   const response = await axios.post(`${BASE_URL_PREDICT}/${item}`, formData, {
@@ -35,7 +35,7 @@ export const findDiseaseAPI = async (selectedFile) => {
 
   return response.data;
 };
- 
+
 export const uploadResponseAPI = async (response_gemini) => {
   const token = getToken();
 
