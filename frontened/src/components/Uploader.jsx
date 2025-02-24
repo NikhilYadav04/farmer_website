@@ -47,14 +47,17 @@ const Uploader = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedFile) {
+
+    const selectedOption = JSON.parse(localStorage.getItem('itemdata'))?.item;
+
+    if (!selectedFile || !selectedOption) {
       toast.error('No file selected', { position: 'bottom-center' });
       return;
     }
 
     try {
       await uploadImage(selectedFile);
-      const diseaseData = await diseaseMutation(selectedFile);
+      const diseaseData = await diseaseMutation(selectedOption);
       await responseMutation(diseaseData.disease);
 
       setShowResponse(true);
