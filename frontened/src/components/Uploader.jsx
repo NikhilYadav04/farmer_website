@@ -16,6 +16,7 @@ import Dropdown from '../components/Dropdown';
 import { useUpload } from '../features/uploader/useUpload';
 import { useDisease } from '../features/uploader/useDisease';
 import { useResponse } from '../features/uploader/useResponse';
+import { toast } from 'react-toastify';
 
 const Uploader = () => {
   const inputRef = useRef(null);
@@ -32,6 +33,28 @@ const Uploader = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+    if (!allowedTypes.includes(file.type)) {
+      toast.error(
+        'Invalid file type. Please upload an image (JPG, JPEG, PNG, WEBP).',
+        { position: 'bottom-center' }
+      );
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast.error(
+        'File is too large. Please upload an image smaller than 5MB.',
+        { position: 'bottom-center' }
+      );
+      return;
+    }
+
     dispatch(setImage(file));
     dispatch(setFileName(file.name));
     dispatch(setSelectedFile(file));
