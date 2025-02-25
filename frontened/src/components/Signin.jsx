@@ -90,7 +90,7 @@ const Signin = () => {
             className="h-10 w-96 border-none bg-transparent text-base outline-none"
           />
         </div>
-        <div className="mx-auto my-5 flex gap-8">
+        <div className="mx-48 my-5 flex gap-8">
           <Button type="primary">Sign In</Button>
         </div>
       </form>

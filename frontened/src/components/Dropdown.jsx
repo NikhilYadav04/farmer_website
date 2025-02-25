@@ -46,7 +46,7 @@ const Dropdown = () => {
           )}
         </button>
         {isOpen && (
-          <div className="ring-opacity-4 absolute z-10 mt-2 w-64 divide-y divide-neutral-500 rounded-sm bg-neutral-900/30 shadow-lg ring-2 ring-neutral-500">
+          <div className="ring-opacity-4 absolute z-10 mt-2 w-full divide-y divide-neutral-500 rounded-sm bg-neutral-900 shadow-lg ring-2 ring-neutral-500">
             {list.map((item, i) => (
               <div
                 key={i}
