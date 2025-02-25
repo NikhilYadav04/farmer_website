@@ -1,5 +1,7 @@
 //hr function ko ek new file mein convert krna hai
 
+import { RotatingLines } from 'react-loader-spinner';
+
 import { useState } from 'react';
 import { useRef } from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
@@ -16,6 +18,7 @@ import Dropdown from '../components/Dropdown';
 import { useUpload } from '../features/uploader/useUpload';
 import { useDisease } from '../features/uploader/useDisease';
 import { useResponse } from '../features/uploader/useResponse';
+import { toast } from 'react-toastify';
 
 const Uploader = () => {
   const inputRef = useRef(null);
@@ -32,6 +35,28 @@ const Uploader = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+    if (!allowedTypes.includes(file.type)) {
+      toast.error(
+        'Invalid file type. Please upload an image (JPG, JPEG, PNG, WEBP).',
+        { position: 'bottom-center' }
+      );
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast.error(
+        'File is too large. Please upload an image smaller than 5MB.',
+        { position: 'bottom-center' }
+      );
+      return;
+    }
+
     dispatch(setImage(file));
     dispatch(setFileName(file.name));
     dispatch(setSelectedFile(file));
@@ -79,14 +104,14 @@ const Uploader = () => {
 
   return (
     <>
-      <div className="mx-5 flex flex-row flex-wrap items-center justify-center gap-3 rounded-3xl border border-transparent p-5 hover:border-green-500 lg:justify-between">
-        <h1 className="w-1/2 text-center text-5xl font-bold">
-          Upload Crop images and get{' '}
+      <div className="my-10 flex flex-col items-center justify-center gap-3 rounded-3xl border border-transparent bg-neutral-800/30 py-10">
+        {/* <h1 className="w-1/2 text-center text-5xl font-bold">
+          Upload crop images and get{' '}
           <span className="bg-gradient-to-r from-green-900 to-green-600 bg-clip-text text-transparent">
             disease prediction
           </span>
-        </h1>
-        <main className="flex flex-col gap-4 rounded-3xl border border-transparent bg-black/10 px-10 pt-10">
+        </h1> */}
+        <main className="flex flex-col gap-4 rounded-3xl border border-transparent px-10">
           <form
             onClick={handleImageClick}
             className="flex h-[300px] w-[500px] cursor-pointer flex-col items-center justify-center rounded-3xl border border-dashed"
@@ -126,16 +151,27 @@ const Uploader = () => {
               />
             </span>
           </section>
-          <Dropdown />
-          <div className="mx-auto">
+          <div className="mx-auto flex w-full flex-col items-center justify-center gap-5">
+            <Dropdown />
             <Button
               type="primary"
               onClick={handleSubmit}
               disabled={isUploading || isLoading || isResponsing}
             >
-              {isUploading || isLoading || isResponsing
-                ? 'Uploading...'
-                : 'Submit'}
+              {isUploading || isLoading || isResponsing ? (
+                <div className="flex items-center gap-2">
+                  <RotatingLines
+                    strokeColor="white"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    width="25"
+                    visible={true}
+                  />
+                  <p>Uploading...</p>
+                </div>
+              ) : (
+                'Submit'
+              )}
             </Button>
           </div>
         </main>

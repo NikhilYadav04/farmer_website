@@ -6,7 +6,7 @@ export default function Button({ children, type, to, onClick }) {
 
   const styles = {
     primary:
-      'flex h-12 w-36 cursor-pointer items-center justify-center rounded-xl bg-green-700 hover:bg-green-800 text-base',
+      'flex h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-green-700 hover:bg-green-800 text-base',
 
     secondary:
       base +

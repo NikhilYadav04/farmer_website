@@ -119,7 +119,7 @@ const Register = () => {
           />
         </div>
       </div>
-      <div className="mx-auto my-5 flex gap-8">
+      <div className="mx-48 my-5 flex gap-8">
         <Button type="primary" onClick={handleSubmit}>
           Sign Up
         </Button>

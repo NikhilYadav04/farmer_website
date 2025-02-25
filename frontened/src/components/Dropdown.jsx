@@ -1,40 +1,66 @@
-import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
-import { useState } from "react";
-import list from "../data/list.json";
+import { AiOutlineCaretUp, AiOutlineCaretDown } from 'react-icons/ai';
+import { useState, useRef, useEffect } from 'react';
+import list from '../data/list.json';
+
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState("Dropdown");
+  const [name, setName] = useState('Select the plant name');
+  const dropdownRef = useRef(null);
 
   const handleChange = (item) => {
     setName(item);
     setIsOpen(false);
-    localStorage.setItem("itemdata", JSON.stringify({
-      item:item,
-    }))
-  }
+    localStorage.setItem(
+      'itemdata',
+      JSON.stringify({
+        item: item,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="relative flex flex-col items-center w-full h-full rounded-lg">
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="relative p-5 w-full border border-neutral-700 hover:border-green-400 hover:bg-green-900/30 flex items-center justify-between font-medium text-base rounded-xl tracking-wide border-3 min-height-10 active:border-green-400 duration-300"
-      >
-        {name}
-        {!isOpen ? (
-          <AiOutlineCaretDown className="h-8" />
-        ) : (
-          <AiOutlineCaretUp className="h-8" />
+    <div ref={dropdownRef} className="relative w-full">
+      <div className="relative">
+        <button
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="flex w-full items-center justify-between rounded-md border border-neutral-600 bg-neutral-900/30 px-4 py-2 text-base font-medium text-neutral-400 shadow-sm focus:border-green-500 focus:outline-none"
+        >
+          {name}
+          {!isOpen ? (
+            <AiOutlineCaretDown className="h-8" />
+          ) : (
+            <AiOutlineCaretUp className="h-8" />
+          )}
+        </button>
+        {isOpen && (
+          <div className="ring-opacity-4 absolute z-10 mt-2 w-full divide-y divide-neutral-500 rounded-sm bg-neutral-900 shadow-lg ring-2 ring-neutral-500">
+            {list.map((item, i) => (
+              <div
+                key={i}
+                className="w-full cursor-pointer rounded-sm px-2 py-1 hover:bg-green-400/20"
+                onClick={() => {
+                  handleChange(item);
+                }}
+              >
+                <p className="py-2 text-sm text-neutral-400">{item}</p>
+              </div>
+            ))}
+          </div>
         )}
-      </button>
-      {isOpen && (
-        <div className="bg-neutral-900/30 mt-2 border flex flex-col items-start rounded-lg p-3 w-full">
-          {list.map((item, i) => (
-            <div key={i} className="w-full hover:bg-green-500/20 cursor-pointer rounded-r-lg border-l-transparent hover:border-l-white border-l-2">
-              <h3 className="font-medium text-lg border-b py-3 pl-2" onClick={()=>{handleChange(item)}}>{item}</h3>
-            </div>
-          ))}
-        </div>
-      )}
+      </div>
     </div>
   );
 };
